@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">ECM</string>
+    <string name="app_title">Emergency Contact Memorizer</string>
+    <string name="contact">Contact: </string>
 </resources>
