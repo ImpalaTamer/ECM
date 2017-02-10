@@ -18,11 +18,12 @@
         android:textAlignment="center"
         android:text="@string/app_title"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="125dp"
         android:layout_marginBottom="@dimen/main_spacing"
         android:textSize="24sp" />
 
     <AutoCompleteTextView
-        android:id="@+id/enterContact"
+        android:id="@+id/enter_contact"
         android:text="Enter Contact"
         android:layout_centerHorizontal="true"
         android:layout_width="match_parent"
@@ -32,18 +33,18 @@
         android:layout_marginBottom="@dimen/main_spacing" />
 
     <AutoCompleteTextView
-        android:id="@+id/enterFrequency"
+        android:id="@+id/enter_frequency"
         android:text="Enter Frequency"
         android:layout_centerHorizontal="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
-        android:layout_below="@+id/enterContact"
+        android:layout_below="@+id/enter_contact"
         android:layout_marginBottom="@dimen/main_spacing" />
 
     <Switch
-        android:id="@+id/onOffSwitch"
-        android:layout_below="@+id/enterFrequency"
+        android:id="@+id/on_off_switch"
+        android:layout_below="@+id/enter_frequency"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/main_spacing"
         android:layout_width="wrap_content"
@@ -55,11 +56,11 @@
         android:textOn="ON"/>
 
     <Button
-        android:id="@+id/saveButton"
+        android:id="@+id/save_button"
         android:text="Save"
         android:layout_width="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/onOffSwitch" />
+        android:layout_below="@+id/on_off_switch" />
 
 </RelativeLayout>
