@@ -24,7 +24,7 @@
 
     <AutoCompleteTextView
         android:id="@+id/enter_contact"
-        android:text="Enter Contact"
+        android:text="Name Of Contact"
         android:layout_centerHorizontal="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
