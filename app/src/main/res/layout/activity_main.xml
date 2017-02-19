@@ -54,6 +54,7 @@
             android:textAlignment="center"
             android:layout_marginBottom="@dimen/main_spacing"
             android:textSize="18sp"
+            android:inputType="number"
             android:id="@+id/enter_frequency"/>
 
         <TextView
@@ -74,7 +75,7 @@
         android:textSize="18sp"
         android:textOff="OFF"
         android:textOn="ON"
-        android:id="@+id/on_off_switch"
+        android:id="@+id/notifcations_switch"
         android:layout_below="@+id/enter_frequency_layout"/>
 
     <Button
@@ -83,6 +84,6 @@
         android:layout_centerHorizontal="true"
         android:layout_height="wrap_content"
         android:id="@+id/save_button"
-        android:layout_below="@+id/on_off_switch"/>
+        android:layout_below="@+id/notifcations_switch"/>
 
 </RelativeLayout>
