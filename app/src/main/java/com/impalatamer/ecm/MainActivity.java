@@ -5,8 +5,10 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Build;
 import android.provider.ContactsContract;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.NotificationCompat;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -29,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     private static String contactValue;
     private static boolean notificationsSwitchValue;
     private static int frequencyValue;
+
+    NotificationCompat.Builder mBuilder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,18 +60,28 @@ public class MainActivity extends AppCompatActivity {
                 AutoCompleteTextView textView = (AutoCompleteTextView) findViewById(R.id.enter_contact);
                 contactValue = textView.getText().toString();
 
+                //TODO fix this value
                 //grab state of frequency field
                 EditText frequency = (EditText) findViewById(R.id.enter_frequency);
-                frequencyValue = Integer.parseInt(frequency.getText().toString());
+                //frequencyValue = Integer.parseInt(frequency.getText().toString());
 
                 //grab state of switch
                 Switch notificationsSwitch = (Switch) findViewById(R.id.notifcations_switch);
                 notificationsSwitchValue = notificationsSwitch.isChecked();
 
+                //TODO found compatibility solution in stackoverflow, where is this in android documentation?
+                NotificationManagerCompat n = NotificationManagerCompat.from(getApplicationContext());
+                n.notify(1, mBuilder.build());
+
             }
 
         });
 
+        //TODO build notification system
+        mBuilder = new NotificationCompat.Builder(this);
+        mBuilder.setSmallIcon(R.mipmap.ic_launcher);
+        mBuilder.setContentTitle("Memorize this!");
+        mBuilder.setContentText(contactValue);
 
     }
 
