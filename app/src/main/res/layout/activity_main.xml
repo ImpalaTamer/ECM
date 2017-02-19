@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.impalatamer.ecm.MainActivity">
+    tools:context="com.impalatamer.ecm.MainActivity"
+    android:id="@+id/activity_main">
 
     <TextView
-        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
@@ -20,31 +19,52 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="125dp"
         android:layout_marginBottom="@dimen/main_spacing"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        android:id="@+id/title"/>
 
     <AutoCompleteTextView
-        android:id="@+id/enter_contact"
         android:text="Name Of Contact"
         android:layout_centerHorizontal="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:layout_below="@+id/title"
-        android:layout_marginBottom="@dimen/main_spacing" />
+        android:layout_marginBottom="@dimen/main_spacing"
+        android:id="@+id/enter_contact"/>
 
-    <AutoCompleteTextView
-        android:id="@+id/enter_frequency"
-        android:text="Enter Frequency"
-        android:layout_centerHorizontal="true"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:layout_below="@+id/enter_contact"
-        android:layout_marginBottom="@dimen/main_spacing" />
+        android:orientation="horizontal"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/main_spacing"
+        android:id="@+id/enter_frequency_layout"
+        android:layout_below="@+id/enter_contact">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Send notification every"
+            android:textSize="18sp"/>
+
+        <EditText
+            android:text="            "
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:layout_marginBottom="@dimen/main_spacing"
+            android:textSize="18sp"
+            android:id="@+id/enter_frequency"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="minutes."
+            android:textSize="18sp"/>
+    </LinearLayout>
+
 
     <Switch
-        android:id="@+id/on_off_switch"
-        android:layout_below="@+id/enter_frequency"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/main_spacing"
         android:layout_width="wrap_content"
@@ -53,14 +73,16 @@
         android:text="Notifications: "
         android:textSize="18sp"
         android:textOff="OFF"
-        android:textOn="ON"/>
+        android:textOn="ON"
+        android:id="@+id/on_off_switch"
+        android:layout_below="@+id/enter_frequency_layout"/>
 
     <Button
-        android:id="@+id/save_button"
         android:text="Save"
         android:layout_width="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/on_off_switch" />
+        android:id="@+id/save_button"
+        android:layout_below="@+id/on_off_switch"/>
 
 </RelativeLayout>
