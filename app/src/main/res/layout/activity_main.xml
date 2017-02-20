@@ -48,8 +48,7 @@
             android:textSize="18sp"/>
 
         <EditText
-            android:text="            "
-            android:layout_width="wrap_content"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:layout_marginBottom="@dimen/main_spacing"
@@ -70,12 +69,12 @@
         android:layout_marginBottom="@dimen/main_spacing"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:checked="false"
+        android:checked="true"
         android:text="Notifications: "
         android:textSize="18sp"
         android:textOff="OFF"
         android:textOn="ON"
-        android:id="@+id/notifcations_switch"
+        android:id="@+id/notifications_switch"
         android:layout_below="@+id/enter_frequency_layout"/>
 
     <Button
@@ -84,6 +83,6 @@
         android:layout_centerHorizontal="true"
         android:layout_height="wrap_content"
         android:id="@+id/save_button"
-        android:layout_below="@+id/notifcations_switch"/>
+        android:layout_below="@+id/notifications_switch"/>
 
 </RelativeLayout>
