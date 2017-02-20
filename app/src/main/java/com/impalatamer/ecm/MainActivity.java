@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
             //After this point you wait for callback in onRequestPermissionsResult(int, String[], int[]) overriden method
 
         } else {
-            getContacts();
+            getContacts2();
         }
 
         final Button saveBtn = (Button) findViewById(R.id.save_button);
@@ -103,6 +103,31 @@ public class MainActivity extends AppCompatActivity {
             c.moveToNext();
         }
 
+        c.close();
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, contacts);
+        AutoCompleteTextView textView = (AutoCompleteTextView) findViewById(R.id.enter_contact);
+        textView.setAdapter(adapter);
+    }
+
+    //TODO need to understand this
+    private void getContacts2() {
+
+        ArrayList contacts = new ArrayList<String>();
+
+        Cursor phones = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,null,null, null);
+
+        while (phones.moveToNext())
+        {
+            String name=phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
+            String phoneNumber = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+
+            contacts.add(name + "   " + phoneNumber);
+
+        }
+
+        phones.close();
+
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, contacts);
         AutoCompleteTextView textView = (AutoCompleteTextView) findViewById(R.id.enter_contact);
         textView.setAdapter(adapter);
@@ -114,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == PERMISSIONS_REQUEST_READ_CONTACTS) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // Permission is granted
-                getContacts();
+                getContacts2();
 
             } else {
                 Toast.makeText(this, "Need to access your Contacts in order to retrieve a Contact's number for you to memorize", Toast.LENGTH_SHORT).show();
