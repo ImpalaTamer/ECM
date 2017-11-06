@@ -9,6 +9,7 @@ import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.NotificationCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -21,30 +22,39 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+
+//Ideas
+//change the icon based on whether or not the app is running
+//add default text to the "enter contact" field
+//be able to add multiple active contacts
+//add statistics such as how many times the notification runs and how long it takes for you to learn the contact
+//can i use this to help me memorize song lyrics
+
+//To do Primary Importance level
+
+
+//To do Secondary
+//TODO change the ECM app icon title to Memorizer
+
 public class MainActivity extends AppCompatActivity {
 
-    //TODO are my visibilty modifiers good?
-    //TODO can I set variables here?
-
     private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 1;
+    private static final String TAG = "MainActivity";
 
-    //TODO store these in a bundle so they are saved during configuration changes
+    //TODO 1 store these in a bundle so they are saved during configuration changes?
+    //TODO 1 set notification switch in bundle
     private static String contactValue;
     private static boolean notificationsSwitchValue;
     private static int frequencyValue;
-
     private static Timer timer;
-
-    NotificationCompat.Builder mBuilder;
+    private static NotificationCompat.Builder nBuilder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //TODO set notifications switch to state stored in bundle
-
-        //TODO make sure to understand this code
+        //TODO 2 make sure to understand this code
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
 
             requestPermissions(new String[]{Manifest.permission.READ_CONTACTS}, PERMISSIONS_REQUEST_READ_CONTACTS);
@@ -54,19 +64,21 @@ public class MainActivity extends AppCompatActivity {
             getContacts();
         }
 
+        //build notification system
+        nBuilder = new NotificationCompat.Builder(this);
+        nBuilder.setSmallIcon(R.mipmap.ic_launcher);
+
         final Button saveBtn = (Button) findViewById(R.id.save_button);
+
         saveBtn.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
 
-                //TODO grab state of contact field
+                //grab state of contact field
                 AutoCompleteTextView textView = (AutoCompleteTextView) findViewById(R.id.enter_contact);
                 contactValue = textView.getText().toString();
-                mBuilder.setContentTitle("Remember this: " + contactValue);
-                //mBuilder.setContentText("Remember this: " + contactValue); //TODO why do i need this here?
+                nBuilder.setContentTitle("Remember this: " + contactValue);
 
-                //TODO fix this value
-                //TODO make input field always center
                 //grab state of frequency field
                 EditText frequency = (EditText) findViewById(R.id.enter_frequency);
                 frequencyValue = Integer.parseInt(frequency.getText().toString());
@@ -76,49 +88,42 @@ public class MainActivity extends AppCompatActivity {
                 Switch notificationsSwitch = (Switch) findViewById(R.id.notifications_switch);
                 notificationsSwitchValue = notificationsSwitch.isChecked();
 
-                //TODO is this necessary?
+                //TODO 2 is this necessary?
+                //TODO 2 do i need to kill thread in onDestroy?
                 if(timer != null){
                     timer.cancel();
                     timer.purge();
                 }
 
-                timer = new Timer(true); //TODO isDaemon = true, does this enhance performance?
+                if(notificationsSwitchValue == true){
 
-                TimerTask tt = new TimerTask() {
-                    @Override
-                    public void run() {
+                    timer = new Timer(true); //TODO isDaemon = true, does this enhance performance?
 
-                        //TODO found compatibility solution in stackoverflow, where is this in android documentation?
-                        NotificationManagerCompat n = NotificationManagerCompat.from(getApplicationContext());
-                        n.notify(1, mBuilder.build());
+                    TimerTask tt = new TimerTask() {
+                        @Override
+                        public void run() {
 
-                        //TODO how come i can access mBuilder here?
-                    }
-                };
+                            NotificationManagerCompat n = NotificationManagerCompat.from(getApplicationContext());
+                            n.notify(1, nBuilder.build());
 
-                timer.scheduleAtFixedRate(tt, frequencyValue, frequencyValue);
+                        }
+                    };
 
-                //toast feedback when save button is pressed
+                    timer.scheduleAtFixedRate(tt, frequencyValue, frequencyValue);
+                }
+
                 Toast.makeText(getApplicationContext(), "Saved!", Toast.LENGTH_SHORT).show();
             }
 
         });
 
-        //TODO build notification system
-        Toast.makeText(getApplicationContext(), "onCreate notification builder", Toast.LENGTH_SHORT);
-        mBuilder = new NotificationCompat.Builder(this);
-        mBuilder.setSmallIcon(R.mipmap.ic_launcher);
-        //mBuilder.setContentTitle("hmm");
-        //mBuilder.setContentText("Memorize this: " + contactValue);
-
     }
 
-    //TODO need to understand this, apparently it is much faster query
     private void getContacts() {
 
         ArrayList contacts = new ArrayList<String>();
 
-        Cursor cur = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,null,null, null);
+        Cursor cur = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, null);
 
         while (cur.moveToNext())
         {
@@ -145,11 +150,18 @@ public class MainActivity extends AppCompatActivity {
                 getContacts();
 
             } else {
-                Toast.makeText(this, "Need to access your Contacts in order to retrieve a Contact's number for you to memorize", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Need to access your Contacts in order to retrieve information for you to memorize", Toast.LENGTH_SHORT).show();
             }
 
         }
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.d(TAG, "onStart() called");
+    }
+    
 
 
 }
